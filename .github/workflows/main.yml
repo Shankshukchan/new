@@ -28,5 +28,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    - name: "just fun"
-      run: echo "hello world"
+    steps:
+
+      - name: "fun"
+        run: echo "Hello, World!"
