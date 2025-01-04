@@ -27,6 +27,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      - name: "checkout"
+        uses: actions/checkout@v2
      
-      -name: "fun"
-       run : echo "hello world"
+      - name: "fun"
+        run : echo "hello world"
