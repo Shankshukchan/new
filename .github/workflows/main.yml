@@ -1,35 +1,51 @@
-name: "first check up"
+name: "Python CI"
 
-on: [push,pull_request]
+on: [push, pull_request]
 
 jobs:
-  build:
+  lint:
+    runs-on: ubuntu-latest
 
-   runs-on: ubuntu-latest
-
-   steps:
-    - name: "checkout"
+    steps:
+    - name: "Checkout code"
       uses: actions/checkout@v2
 
-    - name: "check python version"
+    - name: "Set up Python"
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
 
-    - name: "install dependencies"
-      run: pip install flake8
+    - name: "Install flake8"
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install flake8
 
-    - name: run flake8
-      run: flake8 .
+    - name: "Run flake8"
+      run: |
+        source venv/bin/activate
+        flake8 .
 
   test:
-
     runs-on: ubuntu-latest
 
     steps:
+    - name: "Checkout code"
+      uses: actions/checkout@v2
 
-      - name: "checkout"
-        uses: actions/checkout@v2
-     
-      - name: "fun"
-        run : echo "hello world"
+    - name: "Set up Python"
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: "Install dependencies"
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+        pip install pytest
+
+    - name: "Run tests"
+      run: |
+        source venv/bin/activate
+        pytest
