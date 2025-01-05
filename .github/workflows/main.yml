@@ -1,51 +1,26 @@
-name: "Python CI"
+name: "C CI"
 
 on: [push, pull_request]
 
 jobs:
-  lint:
+  build:
     runs-on: ubuntu-latest
 
     steps:
     - name: "Checkout code"
       uses: actions/checkout@v2
-
-    - name: "Set up Python"
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-
-    - name: "Install flake8"
-      run: |
-        python -m venv venv
-        source venv/bin/activate
-        pip install flake8
-
-    - name: "Run flake8"
-      run: |
-        source venv/bin/activate
-        flake8 .
-
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: "Checkout code"
-      uses: actions/checkout@v2
-
-    - name: "Set up Python"
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
 
     - name: "Install dependencies"
+      run: sudo apt-get install -y gcc cppcheck
+
+    - name: "Compile C code"
       run: |
-        python -m venv venv
-        source venv/bin/activate
-        pip install -r requirements.txt
-        pip install pytest
+        gcc -o my_program main.c
+
+    - name: "Run cppcheck"
+      run: |
+        cppcheck --enable=all --inconclusive --error-exitcode=1 .
 
     - name: "Run tests"
       run: |
-        source venv/bin/activate
-        pytest
+        ./my_program
