@@ -15,7 +15,7 @@ jobs:
 
     - name: "Compile C code"
       run: |
-        gcc -o my_program main.c
+        gcc -o my_program new.c
 
     - name: "Run cppcheck"
       run: |
