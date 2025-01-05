@@ -15,8 +15,8 @@ jobs:
 
     - name: "Compile C code"
       run: |
-        gcc -c  new.c
+        gcc new.c
 
     - name: "Run tests"
       run: |
-        ./a.c
+        ./a.exe
